@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  HomePage-Welcome SimpleCMS!
+{% endblock %}
+
+{% block content %}
+
+      {% for a in article_list %}
+      <div class="card my-2">
+        <div class="card-header">
+          <h5 class="card-title"><a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>  <span class="badge badge-primary text-right">NEW</span></h5>
+        </div>
+        <div class="card-body">
+          <p>
+              {{ a.content | truncatechars:100 }}<a href="{{ a.get_absolute_url }}" target="_blank" class="ui inverted blue button">更多...</a>
+          </p>
+        </div>
+      </div>
+      {% empty %}
+      目前还没有发布文章！
+      {% endfor %}
+
+
+      {% if is_paginated %}
+          <div class="pagination pagination-sm">
+
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a href="?page={{ page_obj.previous_page_number }}" class="page-link">上一页</a>
+            </li>
+            {% endif %}
+
+            {% if first %}
+             <li class="page-item">
+              <a href="?page=1" class="page-link">1</a>
+              </li>
+            {% endif %}
+
+
+            {% if left %}
+              {% if left_has_more %}
+              <li class="page-item">
+               <span class="page-link">...</span>
+               </li>
+              {% endif %}
+
+              {% for i in left %}
+              <li class="page-item">
+                  <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+              </li>
+              {% endfor %}
+
+            {% endif %}
+
+            <li class="page-item">
+            <a href="?page={{ page_obj.number }}" class="page-link" style="color: red">{{ page_obj.number }}</a>
+            </li>
+
+            {% if right %}
+              {% for i in right %}
+                <li class="page-item">
+                  <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                  </li>
+              {% endfor %}
+
+              {% if right_has_more %}
+              <li class="page-item">
+               <span class="page-link">...</span>
+               </li>
+              {% endif %}
+
+            {% endif %}
+
+            {% if last %}
+            <li class="page-item">
+              <a href="?page={{ paginator.num_pages }}" class="page-link">{{ paginator.num_pages }}</a>
+            </li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <a href="?page={{ page_obj.next_page_number }}" class="page-link">下一页</a>
+            </li>
+            {% endif %}
+          </div>
+      {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  {{ category_name.name }}- SimpleCMS
+{% endblock %}
+
+{% block content %}
+<div class="card my-2">
+  <div class="card-header">
+    <h5 class="card-title">{{ category_name.name }}列表 </h5>
+  </div>
+  <div class="card-body">
+    {% for a in article_list %}
+    <h6 class="card-title"><a href="{{ a.get_absolute_url }}">{{ a.title }}</a> </h6>
+    {% empty %}
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

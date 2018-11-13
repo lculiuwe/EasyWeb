@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load markdown_deux_tags %}
+
+{% block title %}
+  {{ article.title }}- SimpleCMS
+{% endblock %}
+
+{% block content %}
+<div class="card my-2">
+  <div class="card-body">
+    <h3 class='text-center'>{{ article.title }}</h3>
+    <hr />
+      <p class='text-center'><span>作者:{{ article.author }}&nbsp;&nbsp;&nbsp;</span><span>发布时间:{{ article.create_time }}&nbsp;&nbsp;&nbsp;</span><span> 浏览量:{{ article.views }}&nbsp;&nbsp;&nbsp;</span><span>文章分类:{{ article.category }}&nbsp;&nbsp;&nbsp;</span></p>
+    <hr />
+    <p class='text-center'>
+        {{ article.content | safe }}
+    </p>
+    <hr />
+    标签：
+          {% for t in article.tags.all %}
+            <span class="badge badge-info">
+              {{ t.name }}
+            </span>
+          {% empty %}
+          <p class='text-left'>
+              没有此文章或者已被删除！
+          </p>
+          {%endfor%}
+  </div>
+</div>
+
+
+
+
+{% endblock content %}
